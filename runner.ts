@@ -38,9 +38,13 @@ function wrapLanguageServicePlugin(p: api.PluginModule): api.TscPlugin {
   return {
     wrap: (program: ts.Program) => {
       const languageService: ts.LanguageService = {
-        getSemanticDiagnostics: (fileName: string) => [],
-        getSyntacticDiagnostics: (fileName: string) => [],
-        getCompilerOptionsDiagnostics: () => [],
+        getSemanticDiagnostics:
+            (fileName: string) => program.getSemanticDiagnostics(
+                program.getSourceFiles().find(sf => sf.fileName === fileName)),
+        getSyntacticDiagnostics:
+            (fileName: string) => program.getSyntacticDiagnostics(
+                program.getSourceFiles().find(sf => sf.fileName === fileName)),
+        getCompilerOptionsDiagnostics: () => program.getOptionsDiagnostics(),
         getProgram: () => program,
       } as any;
       const languageServiceHost: ts.LanguageServiceHost = {
@@ -51,7 +55,7 @@ function wrapLanguageServicePlugin(p: api.PluginModule): api.TscPlugin {
           if (!file) return null;
           return ts.ScriptSnapshot.fromString(file.getFullText());
         },
-        getScriptVersion: () => "1",
+        getScriptVersion: () => '1',
       } as any;
       const project = {projectService: {logger: console}};
       const langSvc = p.create({
