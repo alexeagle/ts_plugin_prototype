@@ -54,7 +54,7 @@ function main() {
 
   diags.push(...diagnoser.getOptionsDiagnostics());
   diags.push(...diagnoser.getGlobalDiagnostics());
-  for (let sf of program.getSourceFiles().filter(sf => !/\.d\.ts/.test(sf.fileName))) {
+  for (let sf of program.getSourceFiles().filter(sf => !/\.d\.ts$/.test(sf.fileName))) {
     diags.push(...diagnoser.getSyntacticDiagnostics(sf));
     diags.push(...diagnoser.getSemanticDiagnostics(sf));
   }
