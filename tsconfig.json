@@ -15,7 +15,7 @@
         ]
     },
     "exclude": [
-        "test_file.ts",
+        "example",
         "node_modules"
     ]
 }

@@ -25,26 +25,24 @@ export interface PluginCreateInfo {
   languageService: ts.LanguageService;
   languageServiceHost: ts.LanguageServiceHost;
   config: PluginImport;
+  project: /*ts.Project from tsserver.js*/ any;
+}
+
+export interface PluginModule {
+    create(createInfo: PluginCreateInfo): ts.LanguageService;
+    config: any;
+}
+
+export interface PluginModuleFactory {
+    (mod: { typescript: typeof ts }): PluginModule;
 }
 
 /**
- * A TypeScript language service plugin.
+ * This API is simpler, for plugins that only target the command-line and never
+ * run in an editor context.
  */
-export interface Plugin {
-  create?(info: PluginCreateInfo): ts.LanguageService;
-  wrap?(d: DiagnosticsProducer): DiagnosticsProducer;
+export interface TscPlugin {
+  wrap(d: ts.Program): ts.Program;
 }
 
-// Partial copy of ts.Program (not in TypeScript upstream)
-interface DiagnosticsProducer {
-    getOptionsDiagnostics(cancellationToken?: ts.CancellationToken): ts.Diagnostic[];
-    getGlobalDiagnostics(cancellationToken?: ts.CancellationToken): ts.Diagnostic[];
-    getSyntacticDiagnostics(sourceFile?: ts.SourceFile, cancellationToken?: ts.CancellationToken): ts.Diagnostic[];
-    getSemanticDiagnostics(sourceFile?: ts.SourceFile, cancellationToken?: ts.CancellationToken): ts.Diagnostic[];
-    getDeclarationDiagnostics(sourceFile?: ts.SourceFile, cancellationToken?: ts.CancellationToken): ts.Diagnostic[];
-}
-
-/**
- * A TypeScript program diagnostics plugin (not in TypeScript upstream)
- */
-export interface TscPlugin {}
+export type Plugin = PluginModule | TscPlugin;
