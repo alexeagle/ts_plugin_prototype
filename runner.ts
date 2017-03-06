@@ -11,9 +11,6 @@ const options: ts.CompilerOptions = {
 };
 const compilerHost = ts.createCompilerHost(options);
 const program = ts.createProgram(['test_file.ts'], options, compilerHost);
-const diags1 = ts.getPreEmitDiagnostics(program);
-console.error(
-    'Diagnostics from compiler\n', ts.formatDiagnostics(diags1, compilerHost));
 
 const beforeTransforms = [before.transformer];
 const afterTransforms: ts.TransformerFactory<ts.SourceFile>[] = [];
