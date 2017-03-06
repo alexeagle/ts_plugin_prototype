@@ -6,7 +6,7 @@ export function transformer(context: ts.TransformationContext):
     switch (node.kind) {
       case ts.SyntaxKind.Decorator:
         // drop on the floor;
-        return null;
+        return null as any;
       default:
         return ts.visitEachChild(node, visitor, context);
     }
@@ -16,4 +16,4 @@ export function transformer(context: ts.TransformationContext):
       ts.visitNode(sf, visitor);
 
   return transformer;
-};
+}

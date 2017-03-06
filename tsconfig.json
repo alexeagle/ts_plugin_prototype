@@ -6,6 +6,7 @@
         "sourceMap": false,
         "outDir": "built",
         "skipDefaultLibCheck": true,
+        "strictNullChecks": true,
         "lib": [
             "es2015"
         ],
