@@ -8,6 +8,7 @@ using the plugin API introduced in https://github.com/Microsoft/TypeScript/pull/
 These require a LanguageService wrapper around the program, and are expected to
 run in the `tsserver.js` editor helper, not in `typescript.js`
 This demo uses the `@angular/language-service` plugin as an example.
+Also see https://github.com/RyanCavanaugh/sample-ts-plugin for a simple example.
 2. Plugins written only for use with `tsc` can skip the LanguageService and just
 wrap the ts.Program. This example is in `tscPlugin.ts`.
 3. Emit transforms can mutate the AST before or after TypeScript lowers to the
